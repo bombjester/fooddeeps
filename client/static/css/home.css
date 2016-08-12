@@ -1,0 +1,164 @@
+body{
+	font-family: 'Alegreya Sans', sans-serif;
+	font-weight: lighter;
+}
+#container{
+	background-image: url("http://www.walldevil.com/wallpapers/a76/patterns-wallpaper-photo-cool-wallpapers-textures-leather-minimalistic-pattern-images.jpg");
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: white;
+	height: 70vh;
+	width: 100vw;
+}
+.top{
+	text-align: center;
+	margin-top: 12%;
+}
+.nav{
+	border-bottom-radius: 4px;
+	opacity: .97;
+	margin: 0px;
+	background-color: #3f3f3f;
+	height: 6%;
+	position: relative;
+	width: 100%;
+	padding: 0px;
+	color: white;
+	position: fixed;
+}
+#search{
+	float: right;
+	height: 100%;
+	border-bottom-right-radius: 4px;
+}
+#user{
+	margin: 1%;
+	padding: 0px;
+	display: inline-block;
+	height: 100%;
+
+}
+@media (max-width: 480px) {
+    p{
+    font-size:6px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    p{
+    font-size:9px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+    p{
+    font-size:14px;
+    }
+}
+
+@media (min-width: 980px) {
+  p{
+  font-size:16px;
+  }
+}
+@media (max-width: 480px) {
+    h1{
+    font-size:20px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    h1{
+    font-size:28px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+    h1{
+    font-size:35px;
+    }
+}
+
+@media (min-width: 980px) {
+  h1{
+  font-size:40px;
+  }
+}
+.logout{
+	vertical-align: top;
+	margin: 0px;
+	margin-left: 3%;
+	height: 100%;
+	display: inline-block;
+}
+.bestpics{
+	margin: 5%;
+	height: 100px;
+	display:block;
+}
+table{
+	text-indent: 0%;
+	width: 50%;
+}
+tr{
+	line-height: 2.5em;
+}
+#line{
+	border-bottom: solid;
+	border-width: 1px;
+}
+.warning{
+	color:#ff4444;
+}
+.picture{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	height: 70%;
+	width: 100%;
+}
+.pics{
+	margin: 2%;
+	display: inline-block;
+	width: 20%;
+	height: 300px;
+}
+.bottom{
+	text-align: center;
+	background-color: white;
+	height: 30%;
+}
+#middle{
+	background-color: #3f3f3f;
+}
+#boards{
+	color: white;
+	background-color: #1a1a1a;
+}
+table{
+	color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

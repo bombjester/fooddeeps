@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title>Food Deeps</title>
+		<link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:300' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="home.css">
+	</head>
+	<body>
+		<div ng-controller = "controller">
+			<div id="container">
+				<div class="nav">
+					<h3 id="user" ng-repeat="y in session">Logged in as: {{y.user}}</h3>
+					<button class="logout btn btn-info" ng-click="logout()"> Logout</button>
+					<button class="logout btn btn-primary" ng-click="showboards()">Show Leaderboard</button>
+					<input id="search" type="text" placeholder="Search..(Not Working)">
+				</div>
+				<div class="row">
+					<div class="col-xs-12 top">
+						<h1> WELCOME TO FOOD DEEPS</h1>
+						<p ng-if="on">Check your deeps below</p>
+					</div>
+					<div class="col-xs-4"></div>
+					<div style="text-align: center" class="col-xs-4">
+						<input style="margin-top: 5%; margin-left: 5%"ng-if="on" id="file" type='file' ng-click="do()" accept="image/*">
+						<!-- <p id="b64"></p>
+						<img height="200" width="200" id="img"> -->
+						<br>
+						<p ng-if="success">Successfully Uploaded!</p>
+						<p class="warning" ng-if="warning">You already voted. You can only vote once a day!</p>
+						<p class="warning" ng-show="warning2">You cannot vote for your own picture!</p>
+					</div>
+					<div class="col-xs-4">
+					</div>	
+				</div>
+			</div>
+			<div id="boards" class="row" ng-show="boards">
+				<div class="col-xs-2">
+				</div>
+				<div class="col-xs-4">
+					<h1>Pic Leaderboards</h1>
+					<div class="bestpics" ng-repeat="y in pics | limitTo:3 | orderBy:'-votes'">
+						<img class="img-responsive" style="float: left; margin-right: 2%"src="{{y.url}}" height="100" width="100">		
+							<p>Rank: {{ $index + 1 }}</p>	
+							<p>Votes: {{y.votes}}</p>				
+							<p>Uploaded by: {{y.name}}</p>
+					</div>
+				</div>
+				<div class="col-xs-1"></div>
+				<div class="col-xs-5">
+					<h1> Top Deeps</h1>
+					<table>
+						<tr id="line">
+							<td>Name</td>
+							<td>Deeps</td>
+						</tr>
+						<tr ng-repeat="z in users | limitTo:3 |orderBy: '-deeps'">
+							<td>{{$index +1}}. {{z.name}}</td>
+							<td>{{z.deeps}}</td>
+						</tr>
+					<!-- <div ng-repeat="z in users | limitTo:3 |orderBy: '-deeps'">
+							<p>{{$index +1}}. {{z.name}}</p>
+							<p>Deeps: {{z.deeps}}</p>
+					</div> -->
+					</table>
+				</div>
+			</div>
+			<div id="middle">
+					<div class="pics"ng-repeat ="x in pics">
+						<a target="_blank" href="{{x.url}}"><img class="img-responsive picture" src="{{x.url}}"></a>
+						<div class="bottom">
+							<p>Deeps: {{x.votes}}</p>
+							<p>{{x.created_at}}</p>
+							<button ng-if="wait" class="btn btn-block btn-primary" ng-click="vote(x._id)"> Vote </button>
+						</div>
+					</div>	
+			</div>
+			
+		</div>
+	</body>
+</html>

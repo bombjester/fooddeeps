@@ -1,0 +1,181 @@
+<html ng-app='app'>
+	<head>
+		<title>Food Deeps</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.5/angular.js"></script>
+  		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+  		<link rel="stylesheet" type="text/css" href="test.css">
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  		<script>
+			var angular = angular.module('app', ['ngRoute']);
+
+			angular.config(function($routeProvider){
+				$routeProvider
+
+				.when('/home' , {
+					templateUrl: 'static/partials/home.html'	
+				})
+				.when('/', {
+					templateUrl: 'static/partials/login.html'
+				})
+				.when('/test',{
+					templateUrl: 'static/partials/test.html'
+				})
+				.otherwise({
+					redirectTo: '/'
+				});
+
+			})
+
+			angular.controller('controller', function($scope, factory, registerfactory, $window){
+				$scope.boards = false;
+				$scope.on = true;
+				$scope.success = false;
+				$scope.pics = [];
+				$scope.session = [];
+				$scope.warning = false;
+				$scope.warning2 = false;
+				$scope.wait = true;
+				$scope.users = [];
+
+
+				$scope.do = function(){
+					$scope.on = false;
+					function EL(id) { 
+						return document.getElementById(id);
+
+						} // Get el by ID helper function
+
+						function readFile() {
+							//console.log("here");
+						  if (this.files && this.files[0]) {
+						  	
+						    var FR = new FileReader();
+
+						    FR.onload = function(e) {
+						    	//console.log(e);
+						    	// console.log(e.currentTarget.result);
+						      //EL("img").src    = e.target.result;
+						      
+						      
+						      factory.add(e.currentTarget.result,$scope.session[0].user, function(data){
+						      	$scope.pics = data;
+						      	$scope.success = true;
+								$scope.on = false;
+						      });
+						     
+						    };       
+						    FR.readAsDataURL( this.files[0] );
+						  }
+						}
+
+
+
+						EL("file").addEventListener("change", readFile, false);
+				}
+				$scope.vote = function(data){
+						$scope.wait = false;
+						$scope.warning1 = false;
+						$scope.warning2 = false;
+					var user = $scope.session[0].user;
+					factory.vote(data, user,function(data){
+						if (data == "Already Voted!"){
+							$scope.warning = true;
+							$scope.wait = true;
+						}
+						else if(data == "Cannot vote for your own Picture!"){
+							$scope.warning2 = true;
+							$scope.wait = true;
+						}
+						else{
+							$scope.pics = data;
+							$scope.wait = true;
+							factory.getallusers(function(data){$scope.users = data});
+						}
+
+					});
+					
+				}
+				
+				registerfactory.session(function(data){
+					$scope.session = data;
+					if($scope.session.length != 0){
+						//console.log($scope.session[0]);
+					}
+					if ($scope.session.length == 0){
+						//console.log("NOT LOGGED IN");
+						$window.location.href = '/';
+					}
+				});
+				$scope.showboards = function(){
+					if($scope.boards == false){
+						$scope.boards = true;
+					}
+					else{
+						$scope.boards = false;
+					}
+					
+				}
+				
+				$scope.logout = function(){
+					$window.location.href = '/';
+				}
+				factory.getallpics(function(data){$scope.pics = data;});
+				factory.getallusers(function(data){$scope.users = data});
+			})
+			angular.factory('factory', function($http){
+				var pics = [];
+				var users = [];
+				var functions = {};
+				var warning1 = "Already Voted!";
+				var warning2 = "Cannot vote for your own Picture!";
+
+				functions.add = function(data,user, callback){
+					var revised = {base64: data, user: user};
+					$http.post('/upload', revised).success(function(result){
+						pics = result;
+						callback(pics);
+					})
+				}
+				functions.getallpics = function(callback){
+					$http.get('/getallpics').success(function(result){
+						
+						pics = result;
+						callback(pics);
+					})
+				}
+				functions.vote = function(data,user, callback){
+					var revised = {_id: data, user: user};
+					$http.post('/votes', revised).success(function(result){
+						if (result != "Already Voted" && result != "Cannot vote for your own pic"){
+							pics = result;
+							callback(pics);
+						}
+						else if (result == "Cannot vote for your own pic"){
+							callback(warning2);
+						}
+						else{
+
+							callback(warning1);
+						}
+					})
+				}
+				functions.getallusers = function(callback){
+					$http.get('/getallusers').success(function(result){
+						users = result;
+						callback(users);
+					})
+				}
+
+				return functions;
+
+			})
+		
+		</script>
+		<script src="static/scripts/loginscript.js"></script>
+	</head>
+	<body>
+		<div ng-view=""></div>
+	</body>
+</html>
