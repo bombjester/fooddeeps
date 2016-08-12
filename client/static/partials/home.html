@@ -11,7 +11,7 @@
 					<h3 id="user" ng-repeat="y in session">Logged in as: {{y.user}}</h3>
 					<button class="logout btn btn-info" ng-click="logout()"> Logout</button>
 					<button class="logout btn btn-primary" ng-click="showboards()">Show Leaderboard</button>
-					<input id="search" type="text" placeholder="Search..(Not Working)">
+					<!-- <input id="search" type="text" placeholder="Search..(Not Working)"> -->
 				</div>
 				<div class="row">
 					<div class="col-xs-12 top">
@@ -20,7 +20,7 @@
 					</div>
 					<div class="col-xs-4"></div>
 					<div style="text-align: center" class="col-xs-4">
-						<input style="margin-top: 5%; margin-left: 5%"ng-if="on" id="file" type='file' ng-click="do()" accept="image/*">
+						<input style="margin-top: 5%; margin-left: 5%"ng-if="on" id="file" type='file' ng-click="do()" accept="image/*" class="ios_only" capture="camera">
 						<!-- <p id="b64"></p>
 						<img height="200" width="200" id="img"> -->
 						<br>
