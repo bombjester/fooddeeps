@@ -19,8 +19,11 @@
 						<p ng-if="on">Check your deeps below</p>
 					</div>
 					<div class="col-xs-4"></div>
-					<div style="text-align: center" class="col-xs-4">
-						<input style="margin-top: 5%; margin-left: 5%"ng-if="on" id="file" type='file' ng-click="do()" accept="image/*" class="ios_only" capture="camera">
+					<div style="text-align: center;" class="col-xs-4">
+						
+							<input nv-file-select uploader="uploader" style="margin-top: 5%; margin-left: 5%"ng-if="on" id="file" type='file' accept="image/*" ng-click="do()"> 
+							
+					
 						<!-- <p id="b64"></p>
 						<img height="200" width="200" id="img"> -->
 						<br>
