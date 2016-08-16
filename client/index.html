@@ -47,14 +47,15 @@
 				}
 				
 				var x = document.cookie;
+				console.log(x);	
 				if (mobilecheck()){
-					//console.log('mobile', x)
+					console.log('mobile', x)
 
 					y = x.substring(0, x.length -1)
 					$scope.online.push(y);
 				}
 				else{
-					//console.log("not mobile", x)
+					console.log("not mobile", x)
 					y = x.substring(0, x.length -1);
 					$scope.online.push(y);
 				}
@@ -178,6 +179,7 @@
 				functions.getallusers = function(callback){
 					$http.get('/getallusers').success(function(result){
 						users = result;
+						
 						callback(users);
 					})
 				}

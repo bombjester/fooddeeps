@@ -44,7 +44,7 @@
 				</div>
 				<div class="col-xs-4">
 					<h1>Pic Leaderboards</h1>
-					<div class="bestpics" ng-repeat="y in pics | limitTo:3 | orderBy:'-votes'">
+					<div class="bestpics" ng-repeat="y in pics | orderBy:'-votes' | limitTo:3">
 						<img class="img-responsive" style="float: left; margin-right: 2%"src="{{y.url}}" height="100" width="100">		
 							<p>Rank: {{ $index + 1 }}</p>	
 							<p>Votes: {{y.votes}}</p>				
@@ -59,7 +59,7 @@
 							<td>Name</td>
 							<td>Deeps</td>
 						</tr>
-						<tr ng-repeat="z in users | limitTo:3 |orderBy: '-deeps'">
+						<tr ng-repeat="z in users | orderBy: '-deeps' | limitTo:3" >
 							<td>{{$index +1}}. {{z.name}}</td>
 							<td>{{z.deeps}}</td>
 						</tr>
