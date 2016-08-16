@@ -8,7 +8,7 @@
 		<div ng-controller = "controller">
 			<div id="container">
 				<div class="nav">
-					<h3 id="user" ng-repeat="y in session">Logged in as: {{y.user}}</h3>
+					<h3 id="user" ng-repeat="y in online">Logged in as: {{y}}</h3>
 					<button class="logout btn btn-info" ng-click="logout()"> Logout</button>
 					<button class="logout btn btn-primary" ng-click="showboards()">Show Leaderboard</button>
 					<!-- <input id="search" type="text" placeholder="Search..(Not Working)"> -->
@@ -16,14 +16,18 @@
 				<div class="row">
 					<div class="col-xs-12 top">
 						<h1> WELCOME TO FOOD DEEPS</h1>
-						<p ng-if="on">Check your deeps below</p>
+						<p>Check your deeps below</p>
 					</div>
 					<div class="col-xs-4"></div>
 					<div style="text-align: center;" class="col-xs-4">
 						
-							<input nv-file-select uploader="uploader" style="margin-top: 5%; margin-left: 5%"ng-if="on" id="file" type='file' accept="image/*" ng-click="do()"> 
-							
-					
+						<input style="margin-left: 43%" ng-if="on" type="file" id="test" accept="image/*">
+						<button class="btn btn-success" ng-if='on'ng-click="test()">Upload</button>
+						<p ng-if="nothing"> Please select a picture</p>
+						<p ng-if="waiting"> Please Wait while picture uploads (Can take up to 30 seconds)</p>
+						<div ng-if="waiting" class="progress">
+							<div role="progressbar" class="progress-bar progress-bar-striped active" aria-valuemin="0" aria-valuemax="100" style="width:100%">Uploading Picture...</div>
+						</div>
 						<!-- <p id="b64"></p>
 						<img height="200" width="200" id="img"> -->
 						<br>
@@ -66,15 +70,15 @@
 					</table>
 				</div>
 			</div>
-			<div id="middle">
-					<div class="pics"ng-repeat ="x in pics">
-						<a target="_blank" href="{{x.url}}"><img class="img-responsive picture" src="{{x.url}}"></a>
-						<div class="bottom">
-							<p>Deeps: {{x.votes}}</p>
-							<p>{{x.created_at}}</p>
-							<button ng-if="wait" class="btn btn-block btn-primary" ng-click="vote(x._id)"> Vote </button>
-						</div>
-					</div>	
+			<div id="middle" class="row">
+				<div class="divs"ng-repeat ="x in pics">
+					<a target="_blank" href="{{x.url}}"><img class="img-responsive picture" src="{{x.url}}"></a>
+					<div class="bottom">
+						<p>Deeps: {{x.votes}}</p>
+						<p>{{x.created_at}}</p>
+						<button ng-if="wait" class="btn btn-block btn-primary buttons" ng-click="vote(x._id)"> Vote </button>
+					</div>
+				</div>	
 			</div>
 			
 		</div>

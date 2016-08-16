@@ -10,7 +10,7 @@ body{
 	background-size: cover;
 	color: white;
 	height: 70vh;
-	width: 100vw;
+	width: 100%;
 }
 .top{
 	text-align: center;
@@ -23,16 +23,13 @@ body{
 	background-color: #3f3f3f;
 	height: 6%;
 	position: relative;
-	width: 100%;
+	width: 100vw;
 	padding: 0px;
 	color: white;
 	position: fixed;
+	z-index: 3;
 }
-#search{
-	float: right;
-	height: 100%;
-	border-bottom-right-radius: 4px;
-}
+
 #user{
 	margin: 1%;
 	padding: 0px;
@@ -118,18 +115,28 @@ tr{
 	height: 70%;
 	width: 100%;
 }
-.pics{
-	margin: 2%;
+.divs{
+	border-radius: 5px;
+	position: relative;
+	margin-left: 4%;
+	margin-top: 1%;
 	display: inline-block;
 	width: 20%;
-	height: 300px;
+	height: 40vh;
 }
 .bottom{
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding-top: 2%;
 	text-align: center;
+	line-height: 1em;
 	background-color: white;
 	height: 30%;
 }
 #middle{
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
 	background-color: #3f3f3f;
 }
 #boards{
@@ -140,13 +147,35 @@ table{
 	color: white;
 }
 
+@media(max-width: 400px){
+	.button{
+		height: 100%;
+		width: 20%;
+	}
+	.bottom{
+		line-hight: .2em;
+	}
+	.divs{
+		width: 40%;
+	}
+}
+
+.buttons{
+	position: absolute;
+	bottom: 0;
+	height: 5vh;
+}
 
 
 
-
-
-
-
+@media (max-width: 480px) {
+    h3{
+    font-size: 8px;
+    }
+    .logout{
+    font-size:6px;
+    }
+}
 
 
 

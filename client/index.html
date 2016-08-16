@@ -3,14 +3,12 @@
 		<title>Food Deeps</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.5/angular.js"></script>
   		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
-  		<script src="static/scripts/angular-file-upload.js"></script>
   		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-  		<link rel="stylesheet" type="text/css" href="test.css">
   		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   		<meta name="viewport" content="width=device-width, initial-scale=1">
 
   		<script>
-			var angular = angular.module('app', ['ngRoute', 'angularFileUpload']);
+			var angular = angular.module('app', ['ngRoute',]);
 
 			angular.config(function($routeProvider){
 				$routeProvider
@@ -30,60 +28,61 @@
 
 			})
 
-			angular.controller('controller', function($scope, factory, registerfactory, $window ,FileUploader){
+			angular.controller('controller', function($scope, factory, registerfactory, $window){
 				$scope.boards = false;
-				$scope.uploader = new FileUploader();
 				$scope.on = true;
 				$scope.success = false;
 				$scope.pics = [];
-				$scope.session = [];
+				$scope.waiting = false;
 				$scope.warning = false;
 				$scope.warning2 = false;
 				$scope.wait = true;
 				$scope.users = [];
-
-
-				$scope.do = function(){
-					
-					$scope.on = false;
-					function EL(id) { 
-
-						return document.getElementById(id);
-
-						} // Get el by ID helper function
-
-						function readFile() {
-							//console.log(this.files, thisfiles[0]);
-						  if (this.files && this.files[0]) {
-						  	
-						    var FR = new FileReader();
-
-						    FR.onload = function(e) {
-						    	console.log(e);
-						    	// console.log(e.currentTarget.result);
-						      //EL("img").src    = e.target.result;
-						      
-						     
-						      factory.add(e.currentTarget.result,$scope.session[0].user, function(data){
-						      	$scope.pics = data;
-						      	$scope.success = true;
-								$scope.on = false;
-						      });
-						     
-						    };       
-						    FR.readAsDataURL( this.files[0] );
-						 }
-						}
-						//readFile();
-
-
-						EL("file").addEventListener("change", readFile, false);
+				$scope.online = [];
+				$scope.nothing = false;
+				if (document.cookie ==""){
+					$window.location.href = '/';
 				}
+				var x = document.cookie;
+				var y = x.substring(0, x.length -1);
+				//console.log(y);
+				$scope.online.push(y);
+
+				$scope.test = function(){
+					$scope.success = false;
+					$scope.nothing = false;
+					var pic = document.getElementById('test');
+					var FR = new FileReader();
+
+					if(typeof(pic.files[0]) != "undefined"){
+						$scope.on = false;
+						$scope.waiting = true;
+						
+						//console.log(pic.files[0]);
+						FR.readAsDataURL(pic.files[0]);
+
+						FR.onload = function(e){
+
+							//console.log(e.currentTarget.result);
+							factory.add(e.currentTarget.result, y, function(data){
+								$scope.pics = data;
+								$scope.success= true;
+								$scope.waiting = false;
+								$scope.on = true;
+								
+							})
+						}
+					}
+					else{
+						$scope.nothing = true;
+					}
+				}
+
 				$scope.vote = function(data){
 						$scope.wait = false;
 						$scope.warning1 = false;
 						$scope.warning2 = false;
-					var user = $scope.session[0].user;
+					var user = y;
 					factory.vote(data, user,function(data){
 						if (data == "Already Voted!"){
 							$scope.warning = true;
@@ -103,16 +102,6 @@
 					
 				}
 				
-				registerfactory.session(function(data){
-					$scope.session = data;
-					if($scope.session.length != 0){
-						//console.log($scope.session[0]);
-					}
-					if ($scope.session.length == 0){
-						//console.log("NOT LOGGED IN");
-						$window.location.href = '/';
-					}
-				});
 				$scope.showboards = function(){
 					if($scope.boards == false){
 						$scope.boards = true;
@@ -124,6 +113,13 @@
 				}
 				
 				$scope.logout = function(){
+					var cookies = document.cookie.split(";");
+					for (var i = 0; i < cookies.length;i++){
+						var cookie = cookies[i];
+				    	var eqPos = cookie.indexOf("=");
+				    	var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+				    	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+					}
 					$window.location.href = '/';
 				}
 				factory.getallpics(function(data){$scope.pics = data;});

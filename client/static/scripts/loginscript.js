@@ -1,17 +1,26 @@
 
 angular.controller('login', function($scope, registerfactory, $window){
+	var cookies = document.cookie.split(";");
+		for (var i = 0; i < cookies.length;i++){
+			var cookie = cookies[i];
+	    	var eqPos = cookie.indexOf("=");
+	    	var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+	    	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+		}
 	$scope.errors = [];
 	$scope.success = false;
 
 	$scope.register = function(){
+		
+
 		$scope.success = false;
 		$scope.errors = [];
-		console.log($scope.box);
+		//console.log($scope.box);
 		
 			registerfactory.register($scope.box, function(data){
 				$scope.errors = data;
 				if($scope.errors[0] == "Username Taken!"){
-					console.log($scope.errors);
+					//console.log($scope.errors);
 				}
 				else{
 					$scope.errors = [];
@@ -39,7 +48,6 @@ angular.controller('login', function($scope, registerfactory, $window){
 angular.factory('registerfactory', function($http){
 	var errors = [];
 	var functions = {};
-	var session = [];
 
 		functions.register = function(data, callback){
 			errors = [];
@@ -51,7 +59,6 @@ angular.factory('registerfactory', function($http){
 		functions.login = function(data, callback){
 			$http.post('/login', data).success(function(result){
 				errors = [];
-				session = [];
 				if (result == "No User"){
 					errors = ["Cannot find User"];
 				}
@@ -59,16 +66,13 @@ angular.factory('registerfactory', function($http){
 					errors = ["Password is Wrong"];
 				}
 				else{
-					
-					session.push({status:"Online", user: result});
+					document.cookie = result;
 					
 				}
 
 				callback(errors);
 			})
 		}
-		functions.session = function(callback){
-			callback(session);
-		}
+		
 	return functions;
 })
