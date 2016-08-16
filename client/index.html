@@ -44,7 +44,7 @@
 					$window.location.href = '/';
 				}
 				var x = document.cookie;
-				var y = x.substring(0, x.length -1);
+				var y = x.substring(0, x.length -0);
 				//console.log(y);
 				$scope.online.push(y);
 
@@ -83,6 +83,7 @@
 						$scope.warning1 = false;
 						$scope.warning2 = false;
 					var user = y;
+					//console.log(data, user, "vote press");
 					factory.vote(data, user,function(data){
 						if (data == "Already Voted!"){
 							$scope.warning = true;
