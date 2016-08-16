@@ -66,7 +66,7 @@ angular.factory('registerfactory', function($http){
 					errors = ["Password is Wrong"];
 				}
 				else{
-					document.cookie = result;
+					document.cookie = result+"=";
 					
 				}
 
