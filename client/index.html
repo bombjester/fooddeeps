@@ -30,10 +30,12 @@
 			})
 
 			angular.controller('controller', function($scope, factory, registerfactory, $window){
+				$scope.todaypics = [];
+				$scope.allpics = [];
 				$scope.boards = false;
 				$scope.on = true;
 				$scope.success = false;
-				$scope.pics = [];
+				$scope.oldpics = [];
 				$scope.waiting = false;
 				$scope.warning = false;
 				$scope.warning2 = false;
@@ -61,10 +63,10 @@
 				}
 				
 
-				$scope.test = function(){
+				$scope.uploadbutton = function(){
 					$scope.success = false;
 					$scope.nothing = false;
-					var pic = document.getElementById('test');
+					var pic = document.getElementById('filebutton');
 					var FR = new FileReader();
 
 					if(typeof(pic.files[0]) != "undefined"){
@@ -78,7 +80,7 @@
 
 							//console.log(e.currentTarget.result);
 							factory.add(e.currentTarget.result, y, function(data){
-								$scope.pics = data;
+								$scope.todaypics = data;
 								$scope.success= true;
 								$scope.waiting = false;
 								$scope.on = true;
@@ -95,6 +97,7 @@
 						$scope.wait = false;
 						$scope.warning1 = false;
 						$scope.warning2 = false;
+						$scope.boards = false;
 					var user = y;
 					//console.log(data, user, "vote press");
 					factory.vote(data, user,function(data){
@@ -107,7 +110,7 @@
 							$scope.wait = true;
 						}
 						else{
-							$scope.pics = data;
+							$scope.todaypics = data;
 							$scope.wait = true;
 							factory.getallusers(function(data){$scope.users = data});
 						}
@@ -118,7 +121,11 @@
 				
 				$scope.showboards = function(){
 					if($scope.boards == false){
-						$scope.boards = true;
+						factory.getallpics(function(data){
+							$scope.allpics = data;
+							$scope.boards = true;
+						});
+						
 					}
 					else{
 						$scope.boards = false;
@@ -136,11 +143,15 @@
 					}
 					$window.location.href = '/';
 				}
-				factory.getallpics(function(data){$scope.pics = data;});
+				factory.gettodaypics(function(data){$scope.todaypics = data;});
 				factory.getallusers(function(data){$scope.users = data});
+				factory.getoldpics(function(data){$scope.oldpics = data});
 			})
+
 			angular.factory('factory', function($http){
-				var pics = [];
+				var todaypics = [];
+				var oldpics = [];
+				var allpics = [];
 				var users = [];
 				var functions = {};
 				var warning1 = "Already Voted!";
@@ -149,23 +160,29 @@
 				functions.add = function(data,user, callback){
 					var revised = {base64: data, user: user};
 					$http.post('/upload', revised).success(function(result){
-						pics = result;
-						callback(pics);
+						todaypics = result;
+						callback(todaypics);
 					})
 				}
-				functions.getallpics = function(callback){
-					$http.get('/getallpics').success(function(result){
+				functions.gettodaypics = function(callback){
+					$http.get('/gettodaypics').success(function(result){
+						todaypics = result;
+						callback(todaypics);
+					})
+				}
+				functions.getoldpics = function(callback){
+					$http.get('/getoldpics').success(function(result){
 						
-						pics = result;
-						callback(pics);
+						oldpics = result;
+						callback(oldpics);
 					})
 				}
 				functions.vote = function(data,user, callback){
 					var revised = {_id: data, user: user};
 					$http.post('/votes', revised).success(function(result){
 						if (result != "Already Voted" && result != "Cannot vote for your own pic"){
-							pics = result;
-							callback(pics);
+							todaypics = result;
+							callback(todaypics);
 						}
 						else if (result == "Cannot vote for your own pic"){
 							callback(warning2);
@@ -181,6 +198,12 @@
 						users = result;
 						
 						callback(users);
+					})
+				}
+				functions.getallpics = function(callback){
+					$http.get('/getallpics').success(function(result){
+						allpics = result;
+						callback(allpics);
 					})
 				}
 

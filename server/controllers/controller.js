@@ -6,22 +6,26 @@ var Users = mongoose.model('users');
 
 
 //Time 
-var today = new Date();
-var day = today.getDay();
-var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
-var yyyy = today.getFullYear();
-var days = ['Sunday', 'Monday', "Tuesday" , "Wednesday", "Thursday", "Friday" , "Saturday"];
-day = days[day];
-if(dd<10) {
-    dd='0'+dd
-} 
+var findtime = function(){
+	var today = new Date();
+	var day = today.getDay();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	var days = ['Sunday', 'Monday', "Tuesday" , "Wednesday", "Thursday", "Friday" , "Saturday"];
+	day = days[day];
+	if(dd<10) {
+	    dd='0'+dd
+	} 
 
-if(mm<10) {
-    mm='0'+mm
-} 
+	if(mm<10) {
+	    mm='0'+mm
+	} 
 
-today = day + ', ' + mm +'/'+dd + '/' + yyyy;
+	 today = day + ', ' + mm +'/'+dd + '/' + yyyy;
+	//today = day + ', ' + mm +'/'+'19' + '/' + yyyy;
+	return today;
+}
 
 
 //cloud server
@@ -42,13 +46,13 @@ module.exports = (function() {
 			cloudinary.v2.uploader.upload(req.body.base64,
     			function(error, result) {
     				//console.log(result.url);
-    				var insert = new Pics({name: req.body.user, url: result.url, votes: 0, created_at: today});
+    				var insert = new Pics({name: req.body.user, url: result.url, votes: 0, created_at: findtime()});
     					insert.save(function(err, results){
 							if (err){
 								res.json("failed adding pic to MongoDB");
 							}
 							else{
-								Pics.find({}, function(err,result){
+								Pics.find({created_at: findtime()}, function(err,result){
 									res.json(result);
 								})
 							}
@@ -56,17 +60,30 @@ module.exports = (function() {
     			});
 		},
 
-		getallpics: function(req,res){
-			Pics.find({}, function(err,results){
+		gettodaypics: function(req,res){
+			Pics.find({created_at: findtime()}, function(err,results){
 				if (err){
-					console.log("error findings");
+					console.log("error findings todays pics");
 				}
 				else{
+					//console.log(results);
+
 					res.json(results);
 				}
 			})
 		},
+		getoldpics: function(req,res){
+			Pics.find({created_at: {$ne: findtime()}}, function(err,results){
+				if (err){
+					console.log("error findings old pics");
+				}
+				else{
+					//console.log(results);
 
+					res.json(results);
+				}
+			})
+		},
 		vote: function(req,res){
 			var same = false;
 			var author = "";
@@ -96,8 +113,8 @@ module.exports = (function() {
 							console.log("Error in voting");
 						}
 						else{
-							Pics.find({}, function(errz,results){
-								Users.update({name: req.body.user}, {$set: {voted:"Yes", cd: today }}, function(errs, res){
+							Pics.find({created_at: findtime()}, function(errz,results){
+								Users.update({name: req.body.user}, {$set: {voted:"Yes", cd: findtime() }}, function(errs, res){
 									//console.log(res, "voted yes");
 								})
 								res.json(results);
@@ -133,7 +150,7 @@ module.exports = (function() {
 				else{
 					if( passwordHash.verify(req.body.password, result[0].password)){
 					
-						if(result[0].cd != today){
+						if(result[0].cd != findtime()){
 							
 							Users.update({_id: result[0]._id}, {$set:{voted: "No"}}, function(res,req){
 							});
@@ -151,6 +168,16 @@ module.exports = (function() {
 			Users.find({}, function(err,result){
 				if(err){
 					console.log("error finding users");
+				}
+				else{
+					res.json(result);
+				}
+			})
+		},
+		getallpics: function(req,res){
+			Pics.find({}, function(err,result){
+				if (err){
+					console.log("error finding all pics for leaderboards");
 				}
 				else{
 					res.json(result);

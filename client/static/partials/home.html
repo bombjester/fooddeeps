@@ -7,7 +7,7 @@
 	<body>
 		<div ng-controller = "controller">
 			<div id="container">
-				<div class="nav">
+				<div id="navs">
 					<h3 id="user" ng-repeat="y in online">Logged in as: {{y}}</h3>
 					<button class="logout btn btn-info" ng-click="logout()"> Logout</button>
 					<button class="logout btn btn-primary" ng-click="showboards()">Show Leaderboard</button>
@@ -21,8 +21,8 @@
 					<div class="col-xs-4"></div>
 					<div style="text-align: center;" class="col-xs-4">
 						
-						<input style="margin-left: 43%" ng-if="on" type="file" id="test" accept="image/*">
-						<button class="btn btn-success" ng-if='on'ng-click="test()">Upload</button>
+						<input id="filebutton" ng-if="on" type="file" accept="image/*">
+						<button class="btn btn-success" ng-if='on'ng-click="uploadbutton()">Upload</button>
 						<p ng-if="nothing"> Please select a picture</p>
 						<p ng-if="waiting"> Please Wait while picture uploads (Can take up to 30 seconds)</p>
 						<div ng-if="waiting" class="progress">
@@ -40,28 +40,33 @@
 				</div>
 			</div>
 			<div id="boards" class="row" ng-show="boards">
-				<div class="col-xs-2">
-				</div>
-				<div class="col-xs-4">
+				<div class="col-xs-6 asdf">
 					<h1>Pic Leaderboards</h1>
-					<div class="bestpics" ng-repeat="y in pics | orderBy:'-votes' | limitTo:3">
-						<img class="img-responsive" style="float: left; margin-right: 2%"src="{{y.url}}" height="100" width="100">		
-							<p>Rank: {{ $index + 1 }}</p>	
-							<p>Votes: {{y.votes}}</p>				
+					<div class="bestpics" ng-repeat="y in allpics | orderBy:'-votes' | limitTo:3">
+
+						<a target="_blank" href="{{y.url}}"><img class="img-responsive boardpics" src="{{y.url}}" height="100" width="100"></a>
+						<div class="boardtext">
 							<p>Uploaded by: {{y.name}}</p>
+							<p>Votes: {{y.votes}}</p>
+						</div>
+						<div class="rank">
+							<p>Rank: </p>
+							{{ $index + 1 }}
+						</div>
 					</div>
 				</div>
-				<div class="col-xs-1"></div>
-				<div class="col-xs-5">
+				<div class="col-xs-6">
 					<h1> Top Deeps</h1>
 					<table>
 						<tr id="line">
+							<td>Rank</td>
 							<td>Name</td>
 							<td>Deeps</td>
 						</tr>
-						<tr ng-repeat="z in users | orderBy: '-deeps' | limitTo:3" >
-							<td>{{$index +1}}. {{z.name}}</td>
-							<td>{{z.deeps}}</td>
+						<tr class="trs"ng-repeat="z in users | orderBy: '-deeps' | limitTo:3" >
+							<td class="tablerank">{{$index +1}}</td>
+							<td class="othernumber">{{z.name}}</td>
+							<td class="othernumber">{{z.deeps}}</td>
 						</tr>
 					<!-- <div ng-repeat="z in users | limitTo:3 |orderBy: '-deeps'">
 							<p>{{$index +1}}. {{z.name}}</p>
@@ -71,12 +76,27 @@
 				</div>
 			</div>
 			<div id="middle" class="row">
-				<div class="divs"ng-repeat ="x in pics">
+				<h2 style="color: white; text-align: center"> Today's Pictures</h2>
+				<div class="divs"ng-repeat ="x in todaypics | orderBy: resverse">
 					<a target="_blank" href="{{x.url}}"><img class="img-responsive picture" src="{{x.url}}"></a>
 					<div class="bottom">
 						<p>Deeps: {{x.votes}}</p>
 						<p>{{x.created_at}}</p>
 						<button ng-if="wait" class="btn btn-block btn-primary buttons" ng-click="vote(x._id)"> Vote </button>
+					</div>
+				</div>	
+			</div>
+			<div id="last" class="row">
+				<h2>Old Pictures</h2>
+				<div class="divs"ng-repeat ="x in oldpics | orderBy: reverse">
+					<a target="_blank" href="{{x.url}}"><img class="img-responsive picture" src="{{x.url}}"></a>
+					<div class="oldbottom">
+
+						<p>Deeps: {{x.votes}}</p>
+						<p>{{x.created_at}}</p>
+						<p>Uploaded by: {{x.name}}</p>
+
+						<button class="btn btn-block btn-danger buttons"> Voting Expired </button>
 					</div>
 				</div>	
 			</div>

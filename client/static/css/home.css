@@ -1,6 +1,10 @@
-body{
+html,body{
+	padding: 0px;
+	margin: 0px;
 	font-family: 'Alegreya Sans', sans-serif;
 	font-weight: lighter;
+	overflow-x: hidden;
+	width: 100%;
 }
 #container{
 	background-image: url("http://www.walldevil.com/wallpapers/a76/patterns-wallpaper-photo-cool-wallpapers-textures-leather-minimalistic-pattern-images.jpg");
@@ -10,24 +14,24 @@ body{
 	background-size: cover;
 	color: white;
 	height: 70vh;
-	width: 100%;
+	width: 100vw;
 }
 .top{
 	text-align: center;
 	margin-top: 12%;
 }
-.nav{
-	border-bottom-radius: 4px;
-	opacity: .97;
+#navs{
+	width: 100%;
+	padding: 0px;
 	margin: 0px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	opacity: .97;
 	background-color: #3f3f3f;
 	height: 6%;
-	position: relative;
-	width: 100vw;
-	padding: 0px;
-	color: white;
 	position: fixed;
-	z-index: 3;
+	color: white;
+	z-index: 2;
 }
 
 #user{
@@ -39,13 +43,13 @@ body{
 }
 @media (max-width: 480px) {
     p{
-    font-size:6px;
+    font-size:8px;
     }
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
     p{
-    font-size:9px;
+    font-size:11px;
     }
 }
 
@@ -57,7 +61,7 @@ body{
 
 @media (min-width: 980px) {
   p{
-  font-size:16px;
+  	font-size:16px;
   }
 }
 @media (max-width: 480px) {
@@ -91,9 +95,18 @@ body{
 	display: inline-block;
 }
 .bestpics{
+	border: solid;
+	border-color: white;
 	margin: 5%;
-	height: 100px;
+	height: 25%;
 	display:block;
+	padding: 0px;
+}
+.boardpics{
+	height: 100%;
+	float: left;
+	display: inline-block;
+	
 }
 table{
 	text-indent: 0%;
@@ -104,7 +117,6 @@ tr{
 }
 #line{
 	border-bottom: solid;
-	border-width: 1px;
 }
 .warning{
 	color:#ff4444;
@@ -119,7 +131,7 @@ tr{
 	border-radius: 5px;
 	position: relative;
 	margin-left: 4%;
-	margin-top: 1%;
+	margin-top: 3%;
 	display: inline-block;
 	width: 20%;
 	height: 40vh;
@@ -127,39 +139,102 @@ tr{
 .bottom{
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-	padding-top: 2%;
+	padding-top: 5%;
 	text-align: center;
 	line-height: 1em;
 	background-color: white;
 	height: 30%;
+	color: black;
+}
+.oldbottom{
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding-top: 5%;
+	text-align: center;
+	line-height: .3em;
+	background-color: white;
+	height: 30%;
+	color: black;
 }
 #middle{
+	width: 100vw;
 	margin: 0px;
-	padding: 0px;
-	width: 100%;
+	padding-bottom: 2%;
 	background-color: #3f3f3f;
+
 }
-#boards{
+#last{
+	margin: 0px;
+	width: 100vw;
+	padding-top: 3%;
+	padding-bottom: 10%;
 	color: white;
+	text-align: center;
 	background-color: #1a1a1a;
 }
+#boards{
+	text-align: center;
+	margin: 0px;
+	width: 100vw;
+	color: white;
+	background-color: #1a1a1a;
+	padding: 0px;
+}
 table{
+	margin: 0px auto;
 	color: white;
 }
 
-@media(max-width: 400px){
+@media(max-width: 420px){
 	.button{
 		height: 100%;
 		width: 20%;
 	}
 	.bottom{
-		line-hight: .2em;
+		padding-top: 5%;
+		line-height: .5em;
+	}
+	.oldbottom{
+		line-height: .2em;
 	}
 	.divs{
-		width: 40%;
+		width: 43%;
 	}
+	.boardpics{
+		width: 25%;
+	}
+	h3{
+    font-size: 8px;
+    }
+    .logout{
+    font-size:6px;
+    }
+    .rank{
+    	font-size: 20px;
+    }
 }
-
+.boardpics{
+	width: 50%;
+}
+.rank{
+	border: solid;
+	border-color: white;
+	font-size: 40px;
+	font-family: bold;
+	margin: 0 auto;
+	float: right;
+	width: 15%;
+	height: 100%;
+	color: black;
+	background-color: white;
+}
+.boardtext{
+	padding-top: 5%;
+	height: 100%;
+	width: 20%;
+	margin: 0 auto;
+	display: inline-block;
+}
 .buttons{
 	position: absolute;
 	bottom: 0;
@@ -168,14 +243,52 @@ table{
 
 
 
-@media (max-width: 480px) {
-    h3{
-    font-size: 8px;
-    }
-    .logout{
-    font-size:6px;
-    }
+
+#filebutton{
+	margin: 0 auto;
+	text-align: center;
+	margin-bottom: 5%;
 }
+
+td{
+
+	text-align: center;
+}
+.trs{
+	border-right: solid;
+	border-color: white;
+	border-width: 1px;
+}
+.othernumber{
+	
+	border-bottom: solid;
+	border-color: white;
+	border-width: 1px;
+}
+
+.tablerank{
+	font-weight: bolder;
+	background-color: white;
+	color: black;
+	border-bottom: solid;
+	border-width: 1px;
+	border-color: white;
+}
+.asdf{
+	margin:0px;
+	padding: 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

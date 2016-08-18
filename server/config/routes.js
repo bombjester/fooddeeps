@@ -4,8 +4,11 @@ module.exports = function(app){
 	app.post('/upload', function(req,res){
 		doge.upload(req,res);
 	})
-	app.get('/getallpics', function(req,res){
-		doge.getallpics(req,res);
+	app.get('/gettodaypics', function(req,res){
+		doge.gettodaypics(req,res);
+	})
+	app.get('/getoldpics', function(req,res){
+		doge.getoldpics(req,res);
 	})
 	app.post('/votes', function(req,res){
 		doge.vote(req,res);
@@ -18,5 +21,8 @@ module.exports = function(app){
 	})
 	app.get('/getallusers', function(req,res){
 		doge.getallusers(req,res);
+	})
+	app.get('/getallpics', function(req,res){
+		doge.getallpics(req,res);
 	})
 }
