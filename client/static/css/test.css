@@ -1,0 +1,12 @@
+.leadpics{
+	opacity: 1;
+	position: absolute;
+	z-index: 99;
+}
+.leadpics:hover{
+	opacity: 0;
+}
+.undertext{
+	position: absolute;
+	background-color: red;
+}

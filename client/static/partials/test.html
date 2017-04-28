@@ -1,0 +1,33 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="test.css">
+	<title></title>
+</head>
+<body>
+	<h1> This is the testing page</h1>
+	
+ 	<div ng-controller="leaderboard" class="row bottom">
+			<div class="col-xs-12">
+  				<h4 class="text-center"> 
+  					LeaderBoards
+  				</h4>
+  				
+					<div class="bestpics" ng-repeat="y in leaders | orderBy:'-votes' | limitTo:3">
+						<div ng-mouseover="hovering()" class="over">
+							<img class="leadpics" src="{{y.url}}" >
+						</div>
+						<div class="undertext">
+							<p>Uploaded by: {{y.name}}</p>
+							<p>Votes: {{y.votes}}</p>
+							<p>Rank: {{ $index + 1 }}</p>
+							
+						</div>
+						
+					</div>
+  			</div>
+		</div>
+
+
+	</div>
+</body>
+</html>

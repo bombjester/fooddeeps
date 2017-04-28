@@ -76,3 +76,91 @@ angular.factory('registerfactory', function($http){
 		
 	return functions;
 })
+
+
+
+angular.controller('modal', function($scope){
+	$scope.show = false;
+
+	$scope.testz = function(){
+		$scope.show = true;
+	}
+	$scope.close = function(){
+		$scope.show = false;
+	}
+	$scope.click = function(){
+		console.log("test");
+	}
+
+});
+
+
+
+angular.controller("leaderboard", function($scope,leaderboardfactory){
+	$scope.leaders = [];
+	$scope.hoverpic1 = false;
+	$scope.hoverpic2 = false;
+	$scope.hoverpic3 = false;
+	leaderboardfactory.pullleaders(function(data){
+		$scope.leaders = data;
+
+	});
+	$scope.hovering = function(data){
+		if (data == 1){
+			$scope.hoverpic1 = true;
+		}
+		else if ( data == 2 ){
+			$scope.hoverpic2 = true;
+		}
+		else if (data == 3){
+			$scope.hoeverpic3 = true;
+		}
+		
+	}
+	$scope.unhovering = function(){
+		
+		$scope.hoverpic1 = false;
+		$scope.hoverpic2 = false;
+		$scope.hoverpic3 = false;
+	}
+});
+
+angular.factory("leaderboardfactory", function($http){
+	var functions = {};
+	var allpics = [];
+
+	functions.pullleaders = function(callback){
+		$http.get('/getallpics').success(function(result){
+			allpics = result;
+			callback(allpics);
+		})
+	}
+	
+	return functions;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
