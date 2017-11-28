@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 // connect to the database
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/food_deeps');
+mongoose.connect('mongodb://admin:1234@ds123976.mlab.com:23976/food_deeps');
 // specify the path to all of the models
 var models_path = __dirname + '/../models'
 // read all of the files in the models_path and for each one check if it is a javascript file before requiring it

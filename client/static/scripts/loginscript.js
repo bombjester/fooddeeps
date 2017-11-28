@@ -113,7 +113,8 @@ angular.controller("leaderboard", function($scope,leaderboardfactory){
 			$scope.hoverpic2 = true;
 		}
 		else if (data == 3){
-			$scope.hoeverpic3 = true;
+			console.log("test");
+			$scope.hoverpic3 = true;
 		}
 		
 	}

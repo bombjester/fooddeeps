@@ -1,6 +1,6 @@
 {
   "name": "personal",
-  "description": "Sample Express Application to test out using Package.json to install dependencies",
+  "description": "foods",
   "dependencies": {
     "body-parser": "^1.14.2",
     "ejs": "1.0.0",
@@ -12,6 +12,9 @@
   },
   "scripts": {
     "start": "node server.js"
+  },
+  "engines":{
+    "node":"5.5.0"
   },
   "version": "1.0.0",
   "main": "server.js",
@@ -28,5 +31,5 @@
   "bugs": {
     "url": "https://github.com/bombjester/website/issues"
   },
-  "homepage": "https://github.com/bombjester/website#readme"
+  "homepage": "https://github.com/bombjester/food_deeps"
 }
