@@ -8,7 +8,7 @@
     "ejs": "1.0.0",
     "express": "~4.10.0",
     "express-session": "^1.17.1",
-    "mongoose": "^4.13.21",
+    "mongoose": "^5.7.5",
     "package.json": "^2.0.1",
     "password-hash": "^1.2.2",
     "socket.io": "^1.7.4"
